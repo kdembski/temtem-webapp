@@ -1,0 +1,239 @@
+﻿@model List<TemtemWebApp.Models.TemtemStatsViewModel>
+
+@{
+                /**/
+
+                ViewBag.Title = "Stats";
+}
+
+<div class="container-lg">
+    <h2 id="header">List of Stats and Traits</h2>
+</div>
+<div id="searchDiv" class="container-lg">
+    <div class="form-group has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input class="form-control" type="text" id="temSearch" placeholder="Enter temtem name, number or trait..." />
+    </div>
+</div>
+<div id="tableDiv" class="container-lg">
+    <table class="table table-dark" ; id="temTable">
+        <thead style="background-color: #00a39b">
+            <tr>
+                <th onclick="sortTable(0)">Number</th>
+                <th onclick="sortTable(1)">Name</th>
+                <th style="min-width: 100px;">Types</th>
+                <th onclick="sortTable(3)">First trait</th>
+                <th onclick="sortTable(4)">Second trait</th>
+                <th onclick="sortTable(5)">HP</th>
+                <th onclick="sortTable(6)">STA</th>
+                <th onclick="sortTable(7)">SPD</th>
+                <th onclick="sortTable(8)">ATK</th>
+                <th onclick="sortTable(9)">DEF</th>
+                <th onclick="sortTable(10)">SPATK</th>
+                <th onclick="sortTable(11)">SPDEF</th>
+                <th onclick="sortTable(12)">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var temtem in Model)
+            {
+                <tr class="temInfo" onclick="location.href = '@Url.Action("ViewTemtemDetails", "Home", new { id=temtem.ID })'">
+                    <td id="temNumber">@temtem.Number</td>
+                    <td id="temName" class="temName" style="font-weight: bold">@temtem.Name</td>
+                    <td style="min-width: 100px;">
+                        @if (temtem.Type2 == "")
+                        {
+                            <img src="@temtem.Type1" class="typeIcon">
+                        }
+                        else
+                        {
+                            <img src="@temtem.Type1" class="typeIcon">
+                            <img src="@temtem.Type2" class="typeIcon">
+                        }
+                    </td>
+                    <td id="Trait1">@temtem.Trait1</td>
+                    <td id="Trait2">@temtem.Trait2</td>
+                    <td>@temtem.HP</td>
+                    <td>@temtem.STA</td>
+                    <td>@temtem.SPD</td>
+                    <td>@temtem.ATK</td>
+                    <td>@temtem.DEF</td>
+                    <td>@temtem.SPATK</td>
+                    <td>@temtem.SPDEF</td>
+                    <td>@temtem.Total</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        function contains(textOne, textTwo) {
+            if (textOne.indexOf(textTwo) != -1)
+                return true;
+        }
+
+        $("#temSearch").keyup(function () {
+            var searchText = $("#temSearch").val().toLowerCase();
+            var temsList = $('.temInfo');
+            temsList.each(function (i, tem) {
+                var $tem = $(tem);
+                var name = $tem.find('#temName').first();
+                var number = $tem.find('#temNumber').first();
+                var trait1 = $tem.find('#Trait1').first();
+                var trait2 = $tem.find('#Trait2').first();
+                name = name.text().toLowerCase();
+                number = number.text().toLowerCase();
+                trait1 = trait1.text().toLowerCase();
+                trait2 = trait2.text().toLowerCase();
+                if (contains(name, searchText) || contains(number, searchText) || contains(trait1, searchText) || contains(trait2, searchText)) {
+                    $(this).show();
+                }
+                else {
+                    $(this).hide();
+                }
+            })
+        })
+    })
+</script>
+<script>
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("temTable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .table > thead > tr > td,
+    .table > thead > tr > th {
+        border-top: none;
+        border-bottom: none;
+    }
+
+    .table > tbody > tr > td,
+    .table > tbody > tr > th {
+        border-top-color: #00a39b;
+        cursor: pointer;
+    }
+
+    .typeIcon {
+        width: 25px;
+        height: 25px;
+    }
+
+    #searchDiv {
+        border: 1px solid #00a39b;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        border-radius: 4px;
+        background-color: #64e8dd;
+    }
+
+    .table {
+        background-color: #2ec7b9;
+        margin-bottom: 0px;
+    }
+
+    #tableDiv {
+        overflow-x: auto;
+        overflow-y: hidden;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        border: 1px solid #00a39b;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        padding: 0;
+        background-color: #64e8dd;
+    }
+
+    #temSearch {
+        margin-top: 16px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 16px;
+        background-color: #a9f5ee;
+        border-color: #00a39b;
+    }
+
+    .has-search .form-control {
+        padding-left: 2.375rem;
+    }
+
+    .has-search .form-control-feedback {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #00a39b;
+    }
+
+    table th:hover {
+        background-color: #7be0d8;
+        cursor: pointer;
+    }
+
+    table > tbody > tr:hover {
+        background-color: #7be0d8
+    }
+
+    #header {
+        margin-top: 20px;
+        color: #383838;
+        font-weight: bold;
+    }
+</style>
+
+

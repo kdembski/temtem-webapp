@@ -1,0 +1,484 @@
+﻿@model TemtemWebApp.Models.TemtemDetailsViewModel
+
+@{
+    ViewBag.Title = "ViewTemtemDetails";
+}
+
+<div class="container-lg mainDiv">
+    <div class="imageDiv">
+        <img src="@Model.Image" class="temImage">
+    </div>
+    <div class="infoDiv">
+        <div class="nameDiv">
+            <img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/4/42/Luma_icon.png/120px-Luma_icon.png?version=a12b8f42d70fc03af119f99faddc7c0f" id="lumaIcon" />
+            <h2 class="temName">@Model.Name</h2>
+            <h4 class="temNumber">@Model.Number</h4>
+        </div>
+        <div class="typeDiv">
+            @if (Model.Type2Name == "None")
+            {
+                <div class="typeBg">
+                    <img src="@Model.Type1Icon" id="type1Icon" class="typeIcon">
+                    <a class="typeName">@Model.Type1Name</a>
+                </div>
+
+            }
+            else
+            {
+                <div class="typeBg">
+                    <img src="@Model.Type1Icon" class="typeIcon">
+                    <a class="typeName">@Model.Type1Name</a>
+                </div>
+                <div class="typeBg">
+                    <img src="@Model.Type2Icon" id="type2Icon" class="typeIcon">
+                    <a class="typeName">@Model.Type2Name</a>
+                </div>
+            }
+        </div>
+        <div class="traitDiv">
+            <a class="trait1">@Model.Trait1</a>
+            <a class="trait2">@Model.Trait2</a>
+        </div>
+    </div>
+    <div class="statsDiv">
+        <div class="row">
+            <div class="col">
+                <p>HP</p>
+                <progress id="progressHP" max="120" value="0"></progress>
+                @Model.HP
+            </div>
+            <div class="col">
+                <p>STA</p>
+                <progress id="progressSTA" max="120" value="0"></progress>
+                @Model.STA
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>SPD</p>
+                <progress id="progressSPD" max="120" value="0"></progress>
+                @Model.SPD
+            </div>
+            <div class="col">
+                <p>ATK</p>
+                <progress id="progressATK" max="120" value="0"></progress>
+                @Model.ATK
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>DEF</p>
+                <progress id="progressDEF" max="120" value="0"></progress>
+                @Model.DEF
+            </div>
+            <div class="col">
+                <p>SPATK</p>
+                <progress id="progressSPATK" max="120" value="0"></progress>
+                @Model.SPATK
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>SPDEF</p>
+                <progress id="progressSPDEF" max="120" value="0"></progress>
+                @Model.SPDEF
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</div>
+<div class="container-lg mainDiv">
+    <table id="typesTable">
+        <thead>
+            <tr>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/3/31/Crystal.png/120px-Crystal.png?version=b3bcb3a62b88260148dc16ae3e0bbd30" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/1/1b/Digital.png/120px-Digital.png?version=e658654144fc6fae3b44d93c1c6dbad9" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/1/1e/Earth.png/120px-Earth.png?version=afbdd96da3f57b1238120aa92e54da7e" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/2/2f/Electric.png/120px-Electric.png?version=dd9ddbe4aa130fae76450fbf7bf13bc8" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/3/30/Fire.png/120px-Fire.png?version=f6774b7e125c13f25be2e19a201c5de1" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/8/8f/Melee.png/120px-Melee.png?version=c17e2371d90ca73e84b0ebcba0a9ddea" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/b/bf/Mental.png/120px-Mental.png?version=d2fc6d53f8e4b16af8621a033f4e0f37" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/a/a7/Nature.png/120px-Nature.png?version=179ceda9fecbf10770476eae0996945f" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/b/b3/Neutral.png/120px-Neutral.png?version=9747c40c9de1636562d745e6f9b88e9b" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/9/96/Toxic.png/120px-Toxic.png?version=ef5bae2db7cd0b09f754cabe633a9344" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/9/9d/Water.png/120px-Water.png?version=c2f840312be15d4d89bd7f32c44124d5" class="typeIconBig"></th>
+                <th><img src="https://gamepedia.cursecdn.com/temtem_gamepedia_en/thumb/b/bf/Wind.png/120px-Wind.png?version=63b57848990bc334a7a2d768d3d69b69" class="typeIconBig"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @if (Model.Type2Defense == "")
+                {
+                    for (var i = 0; i < 12; i++)
+                    {
+                        if (Model.DualTypeDefense[i] == '0')
+                        {
+                            <td style="background-color: lightgreen">1/2x</td>
+                        }
+                        else if (Model.DualTypeDefense[i] == '1')
+                        {
+                            <td style="background-color: #64e8dd">1x</td>
+                        }
+                        else if (Model.DualTypeDefense[i] == '2')
+                        {
+                            <td style="background-color: #f06262">2x</td>
+                        }
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < 12; i++)
+                    {
+                        if (Model.DualTypeDefense[i] == '0')
+                        {
+                            <td style="background-color: lightgreen">1/4x</td>
+                        }
+                        else if (Model.DualTypeDefense[i] == '1')
+                        {
+                            <td style="background-color: lightgreen">1/2x</td>
+                        }
+                        else if (Model.DualTypeDefense[i] == '2')
+                        {
+                            <td style="background-color: #64e8dd">1x</td>
+                        }
+                        else if (Model.DualTypeDefense[i] == '3')
+                        {
+                            <td style="background-color: #f06262">2x</td>
+                        }
+                        else if (Model.DualTypeDefense[i] == '4')
+                        {
+                            <td style="background-color: #f06262">4x</td>
+                        }
+                    }
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#lumaIcon').click(function() {
+            if ($('.temImage').attr('src') === "@Model.Image") {
+                $('.temImage').attr('src', "@Model.LumaImage");
+                $(this).css('filter', 'opacity(100%)');
+            } else if ($('.temImage').attr('src') === "@Model.LumaImage") {
+                $('.temImage').attr('src', "@Model.Image");
+                $(this).css('filter', 'opacity(50%)');
+            }
+        })
+        $('#lumaIcon').hover(function() {
+            if ($('.temImage').attr('src') === "@Model.Image") {
+                $(this).css('filter', 'opacity(100%)');
+            }
+        })
+        $('#lumaIcon').mouseout(function() {
+            if ($('.temImage').attr('src') === "@Model.Image"){
+                $(this).css('filter', 'opacity(50%)');
+            }
+        })
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#progressHP').val(@Model.HP);
+        $('#progressSTA').val(@Model.STA);
+        $('#progressSPD').val(@Model.SPD);
+        $('#progressATK').val(@Model.ATK);
+        $('#progressDEF').val(@Model.DEF);
+        $('#progressSPATK').val(@Model.SPATK);
+        $('#progressSPDEF').val(@Model.SPDEF);
+        var progressBars = ['#progressHP', '#progressSTA', '#progressSPD', '#progressATK', '#progressDEF', '#progressSPATK', '#progressSPDEF']
+        for (var i = 0; i < 7; i++) {
+            if ($(progressBars[i]).val() <= 30) {
+                $(progressBars[i]).css('--valueBackground', 'red');
+            }
+            if ($(progressBars[i]).val() > 30 && $(progressBars[i]).val() <= 60) {
+                $(progressBars[i]).css('--valueBackground', 'yellow');
+            }
+            if ($(progressBars[i]).val() > 60 && $(progressBars[i]).val() <= 90) {
+                $(progressBars[i]).css('--valueBackground', 'rgb(0, 204, 0)');
+            }
+            if ($(progressBars[i]).val() > 90) {
+                $(progressBars[i]).css('--valueBackground', 'green');
+            }
+        }
+    })
+</script>
+<style>
+    th{
+        width: 100px;
+        height: 50px;
+        justify-content: center;
+        text-align: center;
+    }
+    td {
+        width: 100px;
+        height: 50px;
+        justify-content: center;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    thead {
+        background-color: #00a39b
+    }
+
+    .temImage {
+        width: 140px;
+        height: 140px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        border-color: #00a39b;
+        background-color: #a9f5ee;
+        z-index: 1;
+    }
+
+    .typeIcon {
+        float: left;
+        width: 24px;
+        height: 24px;
+    }
+
+    .typeIconBig {
+        width: 40px;
+        height: 40px;
+    }
+
+    .typeName {
+        font-size: 15px;
+        float: left;
+    }
+
+    .mainDiv {
+        overflow: hidden;
+        border: 1px solid #00a39b;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        border-radius: 4px;
+        background-color: #64e8dd;
+        padding: 0;
+        color: #383838;
+    }
+
+    .imageDiv {
+        width: 140px;
+        margin-left: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        float: left
+    }
+
+    .infoDiv {
+        display: flex;
+        flex-direction: column;
+        float: left;
+        height: 140px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .nameDiv {
+        width: 300px;
+        margin-left: 20px;
+        margin-bottom: -5px;
+    }
+
+    .temName {
+        float: left;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .temNumber {
+        font-style: italic;
+        margin-top: 6px;
+    }
+
+    .typeDiv {
+        width: 300px;
+        margin-left: 20px;
+    }
+
+    .traitDiv {
+        width: 300px;
+        margin-left: 20px;
+        margin-top: 10px;
+        color: white;
+    }
+
+    .trait1 {
+        text-align: center;
+        font-weight: bold;
+        border-radius: 4px;
+        background-color: #00a39b;
+        float: left;
+        margin-right: 5px;
+        padding: 3px;
+        font-size: 15px;
+        padding-right: 8px;
+        padding-left: 8px;
+        cursor: pointer;
+    }
+
+        .trait1:hover {
+            background-color: #a9f5ee;
+        }
+
+    .trait2 {
+        text-align: center;
+        font-weight: bold;
+        border-radius: 4px;
+        background-color: #00a39b;
+        float: left;
+        padding: 3px;
+        font-size: 15px;
+        padding-right: 8px;
+        padding-left: 8px;
+        cursor: pointer;
+    }
+
+        .trait2:hover {
+            background-color: #a9f5ee;
+        }
+
+    .typeBg {
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        border-radius: 4px;
+        background-color: #00a39b;
+        margin-right: 5px;
+        float: left;
+        padding: 2px;
+        padding-right: 8px;
+        cursor: pointer;
+    }
+
+        .typeBg:hover {
+            background-color: #a9f5ee;
+        }
+
+    #lumaIcon {
+        height: 26px;
+        width: 26px;
+        z-index: 2;
+        float: left;
+        margin-right: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+        filter: opacity(50%);
+    }
+
+    .statsDiv {
+        height: 140px;
+        width: 600px;
+        margin-right: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        float: right;
+    }
+
+    .row {
+        height: 25%;
+        margin: 0;
+    }
+
+    .col {
+        width: 49%;
+        float: left;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        font-size: 18px;
+        padding-right: 5px;
+    }
+
+        .col p {
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            width: 50px;
+            background-color: #00a39b;
+            border-radius: 2px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin: 0;
+        }
+
+    progress[value] {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-right: 10px;
+        margin-left: 5px;
+        width: 65%;
+        height: 30%;
+    }
+
+        progress[value]::-webkit-progress-bar {
+            background-color: #a9f5ee;
+            border-radius: 2px;
+        }
+
+        progress[value]::-webkit-progress-value {
+            background-color: #00a39b;
+            transition: width 1s;
+            border-radius: 2px;
+        }
+
+    #progressHP {
+        --valueBackground: defaultValue;
+    }
+
+        #progressHP::-webkit-progress-value {
+            background-color: var(--valueBackground);
+        }
+
+    #progressSTA {
+        --valueBackground: defaultValue;
+    }
+
+        #progressSTA::-webkit-progress-value {
+            background-color: var(--valueBackground);
+        }
+
+    #progressSPD {
+        --valueBackground: defaultValue;
+    }
+
+        #progressSPD::-webkit-progress-value {
+            background-color: var(--valueBackground);
+        }
+
+    #progressATK {
+        --valueBackground: defaultValue;
+    }
+
+        #progressATK::-webkit-progress-value {
+            background-color: var(--valueBackground);
+        }
+
+    #progressDEF {
+        --valueBackground: defaultValue;
+    }
+
+        #progressDEF::-webkit-progress-value {
+            background-color: var(--valueBackground);
+        }
+
+    #progressSPATK {
+        --valueBackground: defaultValue;
+    }
+
+        #progressSPATK::-webkit-progress-value {
+            background-color: var(--valueBackground);
+        }
+
+    #progressSPDEF {
+        --valueBackground: defaultValue;
+    }
+
+        #progressSPDEF::-webkit-progress-value {
+            background-color: var(--valueBackground);
+        }
+</style>
